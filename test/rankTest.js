@@ -241,3 +241,76 @@ rankTest('should return A when rating given voyage zone is east-indies, voyage l
     //then
     t.is('B', result)
 });
+rankTest('should return A when rating given voyage zone is china, voyage length is 13, history with china and history length 15', t => {
+    //given
+    const voyage = {
+        zone: 'china',
+        length: 13,
+    };
+    const history = [
+        {
+            zone: 'east-indies',
+            profit: 5,
+        },
+        {
+            zone: 'west-indies',
+            profit: 15,
+        },
+        {
+            zone: 'china',
+            profit: -2,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        },
+        {
+            zone: 'west-africa',
+            profit: 7,
+        }
+    ];
+    //when
+    const result = rating(voyage, history)
+    //then
+    t.is('A', result)
+});
