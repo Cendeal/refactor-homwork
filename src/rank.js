@@ -67,9 +67,8 @@ function rating(voyage, history) {
     const chr = captainHistoryRisk(voyage, history);
     if (vpf * 3 > (vr + chr * 2)) {
         return 'A';
-    } else {
-        return 'B';
     }
+    return 'B';
 }
 
 module.exports = {
