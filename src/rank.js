@@ -7,9 +7,8 @@ function voyageRisk(voyage) {
         }
     }
 
-    if (isZoneInChinaOrEastIndies(voyage.zone)) {
-        result += 4;
-    }
+    result += isZoneInChina(voyage.zone) ? 4 : 0
+
     return Math.max(result, 0);
 }
 
@@ -17,46 +16,37 @@ function hasChina(history) {
     return history.some(v => 'china' === v.zone);
 }
 
-function isZoneInChina(zone){
+function isZoneInChina(zone) {
     return zone === 'china'
 }
 
+function isZoneInChinaAndHasChina(zone, history) {
+    return isZoneInChina(zone) && hasChina(history)
+}
+
 function captainHistoryRisk(voyage, history) {
-    let result = 1;
-    if (history.length < 5) {
-        result += 4;
-    }
+    let result = history.length < 5 ? 5 : 1
     result += history.filter(v => v.profit < 0).length;
-    if (isZoneInChina(voyage.zone) && hasChina(history)) {
-        result -= 2;
-    }
+    result += isZoneInChinaAndHasChina(voyage.zone, history) ? -2 : 0
     return Math.max(result, 0);
 }
-function isZoneInChinaOrEastIndies(zone){
-    return isZoneInChina(zone)||zone === 'east-indies'
+
+function isZoneInChinaOrEastIndies(zone) {
+    return isZoneInChina(zone) || zone === 'east-indies'
 }
+
 function voyageProfitFactor(voyage, history) {
-    let result = 2;
-    if (isZoneInChinaOrEastIndies(voyage.zone)) {
-        result += 1;
-    }
+    let result = (isZoneInChinaOrEastIndies(voyage.zone) ? 1 : 0) + 2;
 
     if (isZoneInChina(voyage.zone) && hasChina(history)) {
-        result += 3;
-        if (history.length > 10) {
-            result += 1;
-        }
-        if (voyage.length > 12 && voyage.length <=18) {
-            result += 1;
-        }
+
+        result += history.length > 10 ? 4 : 3
+        result += voyage.length > 12 && voyage.length <= 18 ? 1 : 0
 
     } else {
-        if (history.length > 8) {
-            result += 1;
-        }
-        if (voyage.length > 14) {
-            result -= 1;
-        }
+
+        result += history.length > 8 ? 1 : 0
+        result += voyage.length > 14 ? -1 : 0
     }
     return result;
 }
