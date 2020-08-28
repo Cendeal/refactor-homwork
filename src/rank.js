@@ -17,19 +17,23 @@ function hasChina(history) {
     return history.some(v => 'china' === v.zone);
 }
 
+function isZoneInChina(zone){
+    return zone === 'china'
+}
+
 function captainHistoryRisk(voyage, history) {
     let result = 1;
     if (history.length < 5) {
         result += 4;
     }
     result += history.filter(v => v.profit < 0).length;
-    if (voyage.zone === 'china' && hasChina(history)) {
+    if (isZoneInChina(voyage.zone) && hasChina(history)) {
         result -= 2;
     }
     return Math.max(result, 0);
 }
 function isZoneInChinaOrEastIndies(zone){
-    return zone === 'china'||zone === 'east-indies'
+    return isZoneInChina(zone)||zone === 'east-indies'
 }
 function voyageProfitFactor(voyage, history) {
     let result = 2;
@@ -37,7 +41,7 @@ function voyageProfitFactor(voyage, history) {
         result += 1;
     }
 
-    if (voyage.zone === 'china' && hasChina(history)) {
+    if (isZoneInChina(voyage.zone) && hasChina(history)) {
         result += 3;
         if (history.length > 10) {
             result += 1;
